@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chantier;
 use App\Models\Depense;
 use App\Models\Fournisseur;
+use App\Models\BonCommande;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -37,6 +38,9 @@ class DashboardController extends Controller
         $nombreDepenses = $depensesQuery->count();
         $budgetRestant = $totalBudget - $totalDepenses;
         $pourcentageConsomme = $totalBudget > 0 ? round(($totalDepenses / $totalBudget) * 100, 1) : 0;
+
+        // Nombre de bons de commande
+        $bonCommandesCount = BonCommande::count();
 
         // Dépenses par chantier (avec filtres de date)
         $depensesParChantier = Chantier::withSum(['depenses' => function($q) use ($dateDebut, $dateFin) {
@@ -109,7 +113,8 @@ class DashboardController extends Controller
             'nombreDepenses', 'budgetRestant', 'pourcentageConsomme',
             'depensesParChantier', 'depensesMensuelles',
             'topFournisseurs', 'chantiersCritiques', 'chantiers',
-            'chantierId', 'dateDebut', 'dateFin', 'evolution'
+            'chantierId', 'dateDebut', 'dateFin', 'evolution',
+            'bonCommandesCount'
         ));
     }
 }

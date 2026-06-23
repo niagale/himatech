@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('numero_facture')->nullable();
             $table->string('numero_bc')->nullable();
             $table->string('numero_bl')->nullable();
-            $table->enum('mode_paiement', ['virement', 'cheque', 'especes', 'credit', 'carte', 'autre'])->nullable();
+            $table->enum('mode_paiement', ['virement', 'cheque', 'especes', 'credit', 'carte', 'autre', 'p', 'NP'])->nullable();
             $table->enum('statut_paiement', ['en_attente', 'paye', 'partiellement_paye'])->default('en_attente');
             $table->enum('statut_facture', ['non_payee', 'payee'])->default('non_payee');
             $table->string('type')->default('bc');

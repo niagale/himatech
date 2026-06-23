@@ -162,23 +162,37 @@
         td.center{ text-align:center; }
         td.right{ text-align:right; }
 
-        /* ---------- TOTAUX ---------- */
-        .totals-wrap{ display:flex; justify-content:flex-end; margin-top:10px; }
+        /* ---------- TOTAUX (décalés à DROITE) ---------- */
+        .totals-wrap{
+            display:flex;
+            justify-content:flex-end;
+            margin-top:2px;
+            padding-right:0;
+        }
         table.totals{
             border-collapse:collapse;
             font-family:'Bookman Old Style','URW Bookman',Georgia,serif;
             font-weight:bold;
             font-size:12px;
+            width:auto;
+            margin-left:auto;
         }
         table.totals td{
             border:1px solid #000;
-            padding:4px 10px;
+            padding:4px 20px;
         }
-        table.totals td.label{ text-align:center; width:150px; }
-        table.totals td.value{ text-align:right; width:80px; }
+        table.totals td.label{
+            text-align:left;
+            width:160px;
+        }
+        table.totals td.value{
+            text-align:right;
+            width:100px;
+        }
         table.totals td.total-ttc{
-            font-size:15px;
+            font-size:16px;
             color:var(--blue);
+            font-weight:bold;
         }
 
         /* ---------- SIGNATURE ---------- */
@@ -286,11 +300,21 @@
         </tbody>
     </table>
 
+    <!-- TOTAUX décalés à DROITE -->
     <div class="totals-wrap">
         <table class="totals">
-            <tr><td class="label">TOTAL HORS TAXE</td><td class="value">{{ number_format($bonCommande->total_ht, 2, ',', ' ') }}</td></tr>
-            <tr><td class="label">T.V.A à {{ $bonCommande->tva }}%</td><td class="value">{{ number_format($bonCommande->total_tva, 2, ',', ' ') }}</td></tr>
-            <tr><td class="label">TOTAL T.T.C</td><td class="value total-ttc">{{ number_format($bonCommande->total_ttc, 2, ',', ' ') }}</td></tr>
+            <tr>
+                <td class="label">TOTAL HORS TAXE</td>
+                <td class="value">{{ number_format($bonCommande->total_ht, 2, ',', ' ') }}</td>
+            </tr>
+            <tr>
+                <td class="label">T.V.A à {{ $bonCommande->tva }}%</td>
+                <td class="value">{{ number_format($bonCommande->total_tva, 2, ',', ' ') }}</td>
+            </tr>
+            <tr>
+                <td class="label" style="font-size:14px; color:var(--blue);">TOTAL T.T.C</td>
+                <td class="value total-ttc">{{ number_format($bonCommande->total_ttc, 2, ',', ' ') }}</td>
+            </tr>
         </table>
     </div>
 

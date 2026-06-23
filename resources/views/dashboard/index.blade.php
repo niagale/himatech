@@ -2,7 +2,7 @@
 @section('title', 'Tableau de bord')
 
 @section('content')
-<!-- En-tête avec animation -->
+<!-- En-tête -->
 <div class="mb-8 animate-slideIn">
     <div class="flex justify-between items-end">
         <div>
@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<!-- Filtres sans émojis -->
+<!-- Filtres -->
 <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-8 border border-white/50 animate-fadeInUp" style="animation-delay: 0.05s">
     <div class="flex items-center justify-between mb-4">
         <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
@@ -44,37 +44,34 @@
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fas fa-calendar-alt text-gray-400 mr-1"></i> Date début</label>
-            <input type="date" name="date_debut" value="{{ request('date_debut') }}" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 bg-white/50">
+            <input type="date" name="date_debut" value="{{ request('date_debut') }}" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500">
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fas fa-calendar-alt text-gray-400 mr-1"></i> Date fin</label>
-            <input type="date" name="date_fin" value="{{ request('date_fin') }}" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 bg-white/50">
+            <input type="date" name="date_fin" value="{{ request('date_fin') }}" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500">
         </div>
         <div class="flex items-end gap-3">
-            <button type="submit" class="flex-1 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:from-indigo-700 hover:to-indigo-800 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+            <button type="submit" class="flex-1 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:from-indigo-700 hover:to-indigo-800 transition shadow-md flex items-center justify-center gap-2">
                 <i class="fas fa-search text-xs"></i> Appliquer
             </button>
-            <a href="{{ route('dashboard') }}" class="flex-1 bg-gray-100 text-gray-700 px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-200 transition-all duration-200 flex items-center justify-center gap-2 border border-gray-200">
+            <a href="{{ route('dashboard') }}" class="flex-1 bg-gray-100 text-gray-700 px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-200 transition flex items-center justify-center gap-2 border border-gray-200">
                 <i class="fas fa-undo-alt text-xs"></i> Reset
             </a>
         </div>
     </form>
 </div>
 
-<!-- KPI Cards avec compteurs animés -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- KPI Cards (3 cartes) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
     <div class="group bg-white rounded-2xl shadow-lg p-6 border border-gray-100 card-3d animate-fadeInUp" style="animation-delay: 0.1s">
         <div class="flex justify-between items-start">
             <div>
-                <p class="text-gray-500 text-sm font-medium mb-1">Total Dépenses</p>
-                <p class="text-3xl font-bold text-gray-800">
-                    <span x-data="{ count: 0 }" x-init="setTimeout(() => { count = {{ $totalDepenses }} }, 300)" x-text="new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(count)">0</span>
-                    <span class="text-sm font-normal text-gray-400">MAD</span>
+                <p class="text-gray-500 text-xs font-medium uppercase tracking-wider">Total Dépenses</p>
+                <p class="text-2xl font-bold text-gray-800 mt-1">
+                    <span x-data="{ count: 0 }" x-init="setTimeout(() => { count = {{ $totalDepenses }} }, 300)" x-text="new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(count)">0</span>
+                    <span class="text-xs font-normal text-gray-400">MAD</span>
                 </p>
-                <p class="text-xs text-gray-400 mt-2 flex items-center gap-1">
-                    <i class="fas fa-receipt text-indigo-400"></i>
-                    {{ $nombreDepenses }} dépenses
-                </p>
+                <p class="text-xs text-gray-400 mt-1">{{ $nombreDepenses }} dépenses</p>
             </div>
             <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <i class="fas fa-chart-line text-white text-xl"></i>
@@ -85,15 +82,12 @@
     <div class="group bg-white rounded-2xl shadow-lg p-6 border border-gray-100 card-3d animate-fadeInUp" style="animation-delay: 0.15s">
         <div class="flex justify-between items-start">
             <div>
-                <p class="text-gray-500 text-sm font-medium mb-1">Budget Total</p>
-                <p class="text-3xl font-bold text-gray-800">
-                    <span x-data="{ count: 0 }" x-init="setTimeout(() => { count = {{ $totalBudget }} }, 400)" x-text="new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(count)">0</span>
-                    <span class="text-sm font-normal text-gray-400">MAD</span>
+                <p class="text-gray-500 text-xs font-medium uppercase tracking-wider">Budget Total</p>
+                <p class="text-2xl font-bold text-gray-800 mt-1">
+                    <span x-data="{ count: 0 }" x-init="setTimeout(() => { count = {{ $totalBudget }} }, 400)" x-text="new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(count)">0</span>
+                    <span class="text-xs font-normal text-gray-400">MAD</span>
                 </p>
-                <p class="text-xs text-gray-400 mt-2 flex items-center gap-1">
-                    <i class="fas fa-hard-hat text-emerald-500"></i>
-                    {{ $nombreChantiers }} chantiers
-                </p>
+                <p class="text-xs text-gray-400 mt-1">{{ $nombreChantiers }} chantiers</p>
             </div>
             <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <i class="fas fa-coins text-white text-xl"></i>
@@ -104,45 +98,22 @@
     <div class="group bg-white rounded-2xl shadow-lg p-6 border border-gray-100 card-3d animate-fadeInUp" style="animation-delay: 0.2s">
         <div class="flex justify-between items-start">
             <div>
-                <p class="text-gray-500 text-sm font-medium mb-1">Budget Restant</p>
-                <p class="text-3xl font-bold {{ $budgetRestant < 0 ? 'text-red-600' : 'text-emerald-600' }}">
-                    <span x-data="{ count: 0 }" x-init="setTimeout(() => { count = {{ $budgetRestant }} }, 500)" x-text="new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(count)">0</span>
-                    <span class="text-sm font-normal text-gray-400">MAD</span>
+                <p class="text-gray-500 text-xs font-medium uppercase tracking-wider">Bons de commande</p>
+                <p class="text-2xl font-bold text-gray-800 mt-1">
+                    <span x-data="{ count: 0 }" x-init="setTimeout(() => { count = {{ $bonCommandesCount ?? 0 }} }, 500)" x-text="count">0</span>
                 </p>
-                <p class="text-xs text-gray-400 mt-2 flex items-center gap-1">
-                    <i class="fas fa-percent text-amber-500"></i>
-                    {{ $pourcentageConsomme ?? 0 }}% consommé
-                </p>
+                <p class="text-xs text-gray-400 mt-1">commandes enregistrées</p>
             </div>
-            <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <i class="fas fa-piggy-bank text-white text-xl"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="group bg-white rounded-2xl shadow-lg p-6 border border-gray-100 card-3d animate-fadeInUp" style="animation-delay: 0.25s">
-        <div class="flex justify-between items-start">
-            <div>
-                <p class="text-gray-500 text-sm font-medium mb-1">Fournisseurs</p>
-                <p class="text-3xl font-bold text-gray-800">
-                    <span x-data="{ count: 0 }" x-init="setTimeout(() => { count = {{ $topFournisseurs->count() }} }, 600)" x-text="count">0</span>
-                    <span class="text-sm font-normal text-gray-400">actifs</span>
-                </p>
-                <p class="text-xs text-gray-400 mt-2 flex items-center gap-1">
-                    <i class="fas fa-truck text-purple-500"></i>
-                    partenaires
-                </p>
-            </div>
-            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <i class="fas fa-truck text-white text-xl"></i>
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-file-signature text-white text-xl"></i>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Graphiques premium -->
+<!-- Graphiques -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 animate-fadeInUp card-3d" style="animation-delay: 0.3s">
+    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 animate-fadeInUp card-3d" style="animation-delay: 0.35s">
         <div class="flex items-center justify-between mb-5">
             <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
                 <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center">
@@ -152,10 +123,10 @@
             </h3>
             <div class="text-xs text-gray-400">Par chantier</div>
         </div>
-        <canvas id="chantierChart" height="220"></canvas>
+        <canvas id="chantierChart" height="200"></canvas>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 animate-fadeInUp card-3d" style="animation-delay: 0.35s">
+    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 animate-fadeInUp card-3d" style="animation-delay: 0.4s">
         <div class="flex items-center justify-between mb-5">
             <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
                 <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center">
@@ -165,18 +136,19 @@
             </h3>
             <div class="text-xs text-gray-400">{{ date('Y') }}</div>
         </div>
-        <canvas id="mensuelChart" height="220"></canvas>
+        <canvas id="mensuelChart" height="200"></canvas>
     </div>
 </div>
 
-<!-- Top fournisseurs + Chantiers critiques -->
+<!-- Top fournisseurs + Chantiers critiques (avec limite) -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 animate-fadeInUp card-3d" style="animation-delay: 0.4s">
+    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 animate-fadeInUp card-3d" style="animation-delay: 0.45s">
         <div class="flex items-center gap-3 mb-5">
             <div class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-xl flex items-center justify-center">
                 <i class="fas fa-medal text-white text-sm"></i>
             </div>
             <h3 class="text-lg font-semibold text-gray-800">Top Fournisseurs</h3>
+            <span class="text-xs text-gray-400 ml-auto">{{ $topFournisseurs->count() }} fournisseurs</span>
         </div>
         <div class="space-y-4">
             @foreach($topFournisseurs as $index => $f)
@@ -202,31 +174,45 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 animate-fadeInUp card-3d" style="animation-delay: 0.45s">
+    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 animate-fadeInUp card-3d" style="animation-delay: 0.5s">
         <div class="flex items-center gap-3 mb-5">
             <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-rose-600 rounded-xl flex items-center justify-center">
                 <i class="fas fa-exclamation-triangle text-white text-sm"></i>
             </div>
             <h3 class="text-lg font-semibold text-gray-800">Chantiers critiques</h3>
+            <span class="text-xs text-gray-400 ml-auto">Top 5</span>
         </div>
-        @forelse($chantiersCritiques as $c)
-        <div class="group relative overflow-hidden bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-4 mb-3 border border-red-100 hover:shadow-md transition-all duration-300">
-            <div class="flex justify-between items-start">
-                <div class="flex-1">
-                    <p class="text-sm font-semibold text-gray-800">{{ $c['nom'] }}</p>
-                    <div class="flex items-center gap-3 mt-2">
-                        <div class="flex-1 bg-gray-200 rounded-full h-2">
-                            <div class="bg-gradient-to-r from-red-500 to-orange-500 h-2 rounded-full transition-all duration-500" style="width: {{ min($c['pourcentage'], 100) }}%"></div>
+        
+        @php
+            $critiques = $chantiersCritiques->take(5);
+        @endphp
+        
+        @if($critiques->count() > 0)
+            @foreach($critiques as $c)
+            <div class="group relative overflow-hidden bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-4 mb-3 border border-red-100 hover:shadow-md transition-all duration-300">
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <p class="text-sm font-semibold text-gray-800">{{ $c['nom'] }}</p>
+                        <div class="flex items-center gap-3 mt-2">
+                            <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-red-500 to-orange-500 h-2 rounded-full transition-all duration-500" style="width: {{ min($c['pourcentage'], 100) }}%"></div>
+                            </div>
+                            <p class="text-xs font-bold text-red-600">{{ $c['pourcentage'] }}%</p>
                         </div>
-                        <p class="text-xs font-bold text-red-600">{{ $c['pourcentage'] }}%</p>
                     </div>
+                    <a href="{{ route('chantiers.show', \App\Models\Chantier::where('nom', $c['nom'])->first()->id ?? 1) }}" class="text-indigo-600 hover:text-indigo-800 transition ml-3">
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
-                <a href="{{ route('chantiers.show', \App\Models\Chantier::where('nom', $c['nom'])->first()->id ?? 1) }}" class="text-indigo-600 hover:text-indigo-800 transition ml-3">
-                    <i class="fas fa-arrow-right"></i>
-                </a>
             </div>
-        </div>
-        @empty
+            @endforeach
+            
+            @if($chantiersCritiques->count() > 5)
+            <div class="text-center mt-2">
+                <p class="text-xs text-gray-400">+ {{ $chantiersCritiques->count() - 5 }} autres chantiers critiques</p>
+            </div>
+            @endif
+        @else
         <div class="text-center py-10">
             <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <i class="fas fa-check-circle text-emerald-500 text-2xl"></i>
@@ -234,13 +220,13 @@
             <p class="text-gray-500 text-sm">Tous les chantiers sont dans les limites budgétaires</p>
             <p class="text-xs text-gray-400 mt-1">Parfait !</p>
         </div>
-        @endforelse
+        @endif
     </div>
 </div>
 
 <!-- Résumé des filtres -->
 @if(request('chantier_id') || request('date_debut') || request('date_fin'))
-<div class="mt-6 bg-indigo-50/50 backdrop-blur-sm rounded-xl p-4 border border-indigo-100 animate-fadeInUp" style="animation-delay: 0.5s">
+<div class="mt-6 bg-indigo-50/50 backdrop-blur-sm rounded-xl p-4 border border-indigo-100 animate-fadeInUp" style="animation-delay: 0.55s">
     <p class="text-sm text-indigo-700 flex items-center gap-2">
         <i class="fas fa-filter text-indigo-500"></i>
         <span class="font-medium">Filtres actifs :</span>
